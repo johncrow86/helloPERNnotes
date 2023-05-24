@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 function NotesDisplay({ note, loadNotes }) {
     const [ newDescription, setNewDescription ] = useState(note.description);
+    const navigate = useNavigate();
+
+    function handleView() {
+        navigate(`notes/${note.id}`);
+    }
 
     async function handleEdit() {
         try {
@@ -34,6 +40,7 @@ function NotesDisplay({ note, loadNotes }) {
         <tr>
             <th scope="row">{note.id}</th>
             <td>{note.description}</td>
+            <td><button type="button" className="btn btn-primary" onClick={handleView}>View</button></td>
             <td><button type="button" className="btn btn-warning" data-toggle="modal" data-target={`#id${note.id}`}>Edit</button></td>
             <td><button className="btn btn-danger" onClick={handleDelete}>Delete</button></td>
         </tr>

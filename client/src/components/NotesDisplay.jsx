@@ -8,6 +8,7 @@ function NotesDisplay({ notesList, loadNotes }) {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Description</th>
+                    <th scrop="col">View</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>

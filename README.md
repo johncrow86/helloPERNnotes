@@ -39,7 +39,7 @@ This is a learning app.
 - John Crow (https://github.com/johncrow86)
 
 ## Release Notes
-V1.0
+v1.0
 
 This is the MVP. Each tier of the architecture is built to be as simple and straightforward as possible.
 
@@ -47,11 +47,24 @@ Model Layer
 - Basic model layer.
 
 Server Layer
-- Express - root package required to run the server.
-- express.json - middleware responsible for parsing the request body.
-- PG - package API required to connect to the PostgreSQL database.
-- Cors - package middleware required to interact with browser apps.
-- Nodemon - quality of life package responsible for restarting the server after saved changes.
+1. Express - root package required to run the server.
+2. express.json - middleware responsible for parsing the request body.
+3. PG - package API required to connect to the PostgreSQL database.
+4. Cors - package middleware required to interact with browser apps.
+5. Nodemon - quality of life package responsible for restarting the server after saved changes.
 
 Client Layer
-- React - root library required to run the client.
+1. React - root library required to run the client.
+
+v2.0
+
+Model Layer
+- Added User Role.
+
+Server Layer
+- Added express.Router to seperate endpoints from the index file.
+6. Dotenv - package used to access .env variables.
+
+Client Layer
+2. React-Router-Dom - routing package to allow multiple endpoints in React.
+- Added individual note page routes.

@@ -1,30 +1,24 @@
-import React, { useState, useEffect } from "react";
-// Components
-import AddNote from "./components/AddNote";
-import NotesDisplay from "./components/NotesDisplay";
+// Imports
+import React from "react";
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+// Routes
+import Root from "./routes/Root";
+import Home from "./routes/Home";
+import NoteDetails from "./routes/NoteDetails"
 
+// Create router for RouteProvider
+const router = createBrowserRouter( createRoutesFromElements( 
+    <Route path='/' element={ <Root /> }>
+        <Route index element={ <Home /> } />
+        <Route path='notes/:id' element={ <NoteDetails /> } />
+    </Route>
+));
+
+// Main App
 function App() {
-    const [ notesList, setNotesList ] = useState([]);
-
-    useEffect(() => {
-        loadNotes();
-    },[])
-
-    async function loadNotes() {
-        try {
-            const response = await fetch(`http://localhost:5000/api/notes`);
-            const jsonData = await response.json();
-            setNotesList(jsonData);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     return (
         <div className="container">
-            <h1 className="text-center my-5">Hello PERN Notes!!</h1>
-            <AddNote loadNotes={loadNotes} />
-            <NotesDisplay notesList={notesList} loadNotes={loadNotes} />
+            <RouterProvider router={router} />
         </div>
     );
 }
