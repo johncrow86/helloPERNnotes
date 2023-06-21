@@ -6,11 +6,13 @@ const router = express.Router();
 // Create a note
 router.post('/', async (req, res) => {
     try {
+        const userId = req.user.id;
         const { description } = req.body;
-        if (!description) return res.status(400).json({ error:"Description Needed" })
+        // Check if description is empty
+        if (!description) return res.status(400).json({ error: "Description cannot be blank" })
         const results = await db.query(
-            "INSERT INTO notes (description) VALUES ($1) RETURNING *",
-            [description]
+            "INSERT INTO notes (user_id, description) VALUES ($1, $2) RETURNING *",
+            [userId, description]
         );
         res.status(201).json(results.rows[0]);
     } catch (err) {
@@ -20,9 +22,24 @@ router.post('/', async (req, res) => {
 })
 
 // Get all notes
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         const results = await db.query("SELECT * FROM notes ORDER BY id");
+        res.json(results.rows);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(400);
+    }
+})
+
+// Get all notes by user
+router.get('/', async (req, res) => {
+    try {
+        const userId = req.user.id
+        const results = await db.query(
+            "SELECT * FROM notes WHERE user_id = $1 ORDER BY id",
+            [userId]
+        );
         res.json(results.rows);
     } catch (err) {
         console.error(err);

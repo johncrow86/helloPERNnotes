@@ -11,7 +11,9 @@ function NoteDetails() {
 
     async function loadNote() {
         try {
-            const response = await fetch(`http://localhost:5000/api/notes/${id}`);
+            const response = await fetch(`http://localhost:5000/api/notes/${id}`, {
+                credentials: 'include' // needed to transmit session data
+            });
             const jsonData = await response.json();
             setNote(jsonData);
         } catch (err) {
@@ -20,7 +22,7 @@ function NoteDetails() {
     }
 
     return (
-        <form className="mt-5">
+        <form className="text-center">
             <h1>Note Details</h1>
             <div className="form-group">
                 <h6>{note.id}</h6>

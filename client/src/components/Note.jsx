@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function NotesDisplay({ note, loadNotes }) {
     const [ newDescription, setNewDescription ] = useState(note.description);
-    const navigate = useNavigate();
-
-    function handleView() {
-        navigate(`notes/${note.id}`);
-    }
 
     async function handleEdit() {
         try {
@@ -15,7 +10,8 @@ function NotesDisplay({ note, loadNotes }) {
             const response = await fetch(`http://localhost:5000/api/notes/${note.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
+                body: JSON.stringify(body),
+                credentials: 'include' // needed to transmit session data
             });
             const jsonData = await response.json();
             loadNotes();
@@ -27,7 +23,8 @@ function NotesDisplay({ note, loadNotes }) {
     async function handleDelete() {
         try {
             const response = await fetch(`http://localhost:5000/api/notes/${note.id}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: 'include' // needed to transmit session data
             });
             loadNotes();
         } catch (err) {
@@ -40,9 +37,9 @@ function NotesDisplay({ note, loadNotes }) {
         <tr>
             <th scope="row">{note.id}</th>
             <td>{note.description}</td>
-            <td><button type="button" className="btn btn-primary" onClick={handleView}>View</button></td>
+            <td><Link className="btn btn-primary" to={`notes/${note.id}`}>View</Link></td>
             <td><button type="button" className="btn btn-warning" data-toggle="modal" data-target={`#id${note.id}`}>Edit</button></td>
-            <td><button className="btn btn-danger" onClick={handleDelete}>Delete</button></td>
+            <td><button type="button" className="btn btn-danger" onClick={handleDelete}>Delete</button></td>
         </tr>
         <div className="modal fade" id={`id${note.id}`} tabIndex="-1" aria-labelledby="editNoteLabel" aria-hidden="true" onClick={() => setNewDescription(note.description)}>
             <div className="modal-dialog">

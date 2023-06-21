@@ -41,7 +41,7 @@ This is a learning app.
 ## Release Notes
 v1.0
 
-This is the MVP. Each tier of the architecture is built to be as simple and straightforward as possible.
+This is the MVP. Each tier of the architecture is built to be as simple and straightforward as possible while gradually introducing more features.
 
 Model Layer
 - Basic model layer.
@@ -59,12 +59,33 @@ Client Layer
 v2.0
 
 Model Layer
-- Added User Role.
+- Added Roles.
 
 Server Layer
+1. Dotenv - package used to access .env variables.
 - Added express.Router to seperate endpoints from the index file.
-6. Dotenv - package used to access .env variables.
 
 Client Layer
-2. React-Router-Dom - routing package to allow multiple endpoints in React.
-- Added individual note page routes.
+1. React-Router-Dom - routing package to allow multiple endpoints in React.
+- Added individual note page route.
+
+v3.0
+
+Model Layer
+- Added users table for Login.
+- Added required user_id field for notes table.
+- Added hashing function trigger (commented out, hashing handled by Bcrypt).
+
+Server Layer
+1. Express-Session - package middleware responsible for managing sessions.
+2. Bcrypt - package responsible for password hashing.
+3. Passport Passport-Local - 2 packages responsible for user authentication.
+- Added users routes.
+- Created auth logic in passport.config with proper error handling.
+- Created auth middleware and added to notes routes.
+
+Client Layer
+- Added user login/register route.
+- Created a UserContext.
+- Created a NavBar component.
+- Created a PrivateRoutes component and added private routing to App.js.
